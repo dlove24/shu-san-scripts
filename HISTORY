@@ -1,0 +1,18 @@
+RELEASE HISTORY
+
+HEAD / 2011-09-24
+
+Current Development (David Love)
+
+Changes:
+
+* 3 General Enhancements
+
+    * Version bump to 0.0.1
+    * Version bump to 0.0.0
+    * Initial commit to shu-san-scripts.
+
+* 1 Patch Enhancements
+
+    * Version bump to 0.0.2. Added infrastructure needed for minimally working version
+
