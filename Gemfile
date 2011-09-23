@@ -12,6 +12,7 @@ source "http://rubygems.org"
 
 # Command Line Interface Library
 gem "cli", "~> 0.0.1.2"
+gem "cri", "~> 2.0.2"
 
 ###
 ### Development Gems. All _additional_ gems required by development (as opposed to
