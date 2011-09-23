@@ -1,6 +1,6 @@
 = SHU SAN Scripts
 
-Together these scripts define a ''store'' command, used to simplify the
+Together these scripts define a +store+ command, used to simplify the
 task of creating iSCSI targets on OpenSolaris (Solaris > 11) based
 hosts. It has been tested on Nexenta NCP and Open Indiana, but with some
 modification it could be made to work on FreeBSD as well. 
@@ -25,16 +25,16 @@ available can be obtained by
 
 once everything has been installed.
 
-**Note:** The scripts assume they are running (or at least have access to)
-the ''root'' user role, as they will manipulate your ZFS volumes. You
+*Note:* The scripts assume they are running (or at least have access to)
+the +root+ user role, as they will manipulate your ZFS volumes. You
 can either install them with the appropriate privileges, or install the
-''sudo'' command to make life easier. With ''sudo''
++sudo+ command to make life easier. With +sudo+
 
   sudo store --help
 
 should get you started. 
 
-**Warning:** We use these scripts in a *teaching* environment, and so we
+*Warning:* We use these scripts in a _teaching_ environment, and so we
 assume the host they are running on is somewhat disposable. Your needs
 may differ...
 
