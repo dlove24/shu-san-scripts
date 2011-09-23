@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+### Copyright (c) 2011 David Love <david@homeunix.org.uk>
+###
+### Permission to use, copy, modify, and/or distribute this software for 
+### any purpose with or without fee is hereby granted, provided that the 
+### above copyright notice and this permission notice appear in all copies.
+###
+### THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES 
+### WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF 
+### MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR 
+### ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES 
+### WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN 
+### ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
+### OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+###
+
+### @author David Love
+###
+### Boot straping Command. Used to initalize various aspects of the Mercury
+### environment.
+###
+### @note The sub-commands provided by the bootstrap command assume (at-least)
+### a minimally working Ruby environment, with the required gems installed. Various
+### 'First Boot' scripts are available in the `scripts` directory for different
+### platforms which will achieve at least this minimal state
+###
+
+# Add lib to load path
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
+
+# Load the rubygems library
+require 'rubygems'
+
+# Load core application library
+require 'SANStore'
+
+# Load command line handler
+require 'SANStore/cri'
+require 'SANStore/cli'
+
+# Load the commands from the cmds dir
+plugin_dir = File.expand_path(File.dirname(__FILE__) + '/../cmds')
+
+Dir[plugin_dir + '/*.rb'].sort.each{|file|
+  require file
+}
+
+# Run base
+SANStore::CLI::Base.new.run(ARGV)
