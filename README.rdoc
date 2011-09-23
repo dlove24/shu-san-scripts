@@ -1,8 +1,44 @@
-= shu-san-scripts
+= SHU SAN Scripts
 
-Description goes here.
+Together these scripts define a ''store'' command, used to simplify the
+task of creating iSCSI targets on OpenSolaris (Solaris > 11) based
+hosts. It has been tested on Nexenta NCP and Open Indiana, but with some
+modification it could be made to work on FreeBSD as well. 
 
-== Contributing to shu-san-scripts
+The user interface is deliberately as simple as possible: we assume the
+user has no underlying knowledge of (Open)Solaris, ZFS and not all that
+much of iSCSI. Instead the scripts aim to get iSCSI targets up and
+running as quickly as possible. Much more complex set-ups are indeed
+possible: see the relevant Oracle ZFS administrator's guides for more
+inspiration.
+
+== Using the Scripts
+
+Assuming Ruby Gems has been installed
+
+  gem install shu-san-scripts
+
+should install everything you need. A brief summary of the commands
+available can be obtained by
+
+  store --help
+
+once everything has been installed.
+
+**Note:** The scripts assume they are running (or at least have access to)
+the ''root'' user role, as they will manipulate your ZFS volumes. You
+can either install them with the appropriate privileges, or install the
+''sudo'' command to make life easier. With ''sudo''
+
+  sudo store --help
+
+should get you started. 
+
+**Warning:** We use these scripts in a *teaching* environment, and so we
+assume the host they are running on is somewhat disposable. Your needs
+may differ...
+
+== Contributing to the SHU SAN Scripts
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
