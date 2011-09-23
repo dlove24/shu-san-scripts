@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/dlove24/shu-san-scripts"
   gem.license = "ISC"
   gem.summary = %Q{Scripts used to set-up and manage iSCSI targets on OpenSolaris (ZFS) systems.}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.description = %Q{See the README file.}
   gem.email = "david@homeunix.org.uk"
   gem.authors = ["David Love"]
   # dependencies defined in Gemfile
