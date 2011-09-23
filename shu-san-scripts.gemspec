@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{David Love}]
   s.date = %q{2011-09-23}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{See the README file.}
   s.email = %q{david@homeunix.org.uk}
   s.executables = [%q{store}]
   s.extra_rdoc_files = [
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/SANStore/cri/core_ext.rb",
     "lib/SANStore/cri/core_ext/string.rb",
     "lib/SANStore/cri/option_parser.rb",
+    "shu-san-scripts.gemspec",
     "test/helper.rb",
     "test/test_shu-san-scripts.rb"
   ]
