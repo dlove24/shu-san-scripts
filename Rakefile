@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "shu-san-scripts"
   gem.homepage = "http://github.com/dlove24/shu-san-scripts"
-  gem.license = "MIT"
+  gem.license = "ISC"
   gem.summary = %Q{Scripts used to set-up and manage iSCSI targets on OpenSolaris (ZFS) systems.}
   gem.description = %Q{TODO: longer description of your gem}
   gem.email = "david@homeunix.org.uk"
