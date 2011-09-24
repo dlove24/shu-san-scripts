@@ -29,9 +29,7 @@ class ZFS
     
     # Create the volume
     cmd = %x[zfs create -s -V #{volume_size} #{volume_path}]
-    
-    # Mark it as an iSCSI target
-    cmd = %x[zfs set shareiscsi=on #{volume_path}]
+
   end
 
 end

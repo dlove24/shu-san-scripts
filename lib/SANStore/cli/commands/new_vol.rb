@@ -18,6 +18,9 @@ require "uuidtools"
 # Use the ZFS library
 require "SANStore/zfs/zfs"
 
+# Use the COMStar iSCSI library
+require "SANStore/iSCSI/comstar.rb"
+
 module SANStore::CLI::Commands
 
   # @author David Love
@@ -103,6 +106,12 @@ module SANStore::CLI::Commands
 
       # Ask for a new volume
       ZFS.new_volume(options[:volume_store] + "/" + options[:name], options[:size]) 
+
+      # Set the volume up as an iSCSI target
+      target_name = COMStar.new_target(options[:volume_store] + "/" + options[:name])
+
+      # Tell the caller what the new volume name is
+      puts target_name
     end
 
   end

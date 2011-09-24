@@ -16,28 +16,29 @@
 # @author David Love
 
 # Defines a class capable of creating iSCSI shares using the new
-# COMSTAR framework. This classes uses the various command line tools, 
+# COMStar framework. This classes uses the various command line tools, 
 # not the C API.
-class COMSTAR
+class COMStar
   
   # Create a new, ready to use, iSCSI target. Functionally this is command
   # is equivalent to the old "shareiscsi=on" ZFS volume property.
-  def self.create_target(volume_path)
+  def self.new_target(volume_path)
     
     # Create a new disk target for the ZFS volume
-    disk_target = %x[sbdadm create-lu /dev/zvol/#{volume_path}]
+    disk_target = %x[sbdadm create-lu /dev/zvol/rdsk/#{volume_path}]
 
     # Get the GUID of the new disk target from the output of the
     # target creation command
     guid = disk_target.split(/$/)[4].split[0]
     
-    puts guid
+    # Link the new disk target to the iSCSI framework
+    vol_frame = %x[stmfadm add-view #{guid}]
 
-    #sbdadm create-lu /dev/zvol/rdsk/data/iscsitarget
-    ## assuming the LU GUID returned was
-    #600144f01cdf4f0000004af6f28b0001
-    #stmfadm add-view 600144f01cdf4f0000004af6f28b0001
-    #itadm create-target
+    # Finally create the target...
+    target = %x[itadm create-target]
+
+    #... and return the name to the caller
+    target_name = target.split[1]
   end
 
 end
