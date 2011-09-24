@@ -64,7 +64,7 @@ module SANStore::CLI::Commands
     # Define the options for this command
     def option_definitions
       [
-        { :short => 'v', :long => 'volume-store', :argument => :optional,
+        { :short => 'v', :long => 'volume_store', :argument => :optional,
           :desc => 'specifify the ZFS root of the new iSCSI volume. Defaults to "store/volumes".'
         },
         { :short => 'n', :long => 'name', :argument => :optional,
