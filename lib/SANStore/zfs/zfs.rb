@@ -28,12 +28,10 @@ class ZFS
   def self.new_volume(volume_path, volume_size)
     
     # Create the volume
-    cmd = "zfs create -s -V #{volume_size} #{volume_path}"
-    puts cmd
+    cmd = %x[zfs create -s -V #{volume_size} #{volume_path}]
     
     # Mark it as an iSCSI target
-    cmd = "zfs set shareiscsi=on #{volume_path}"
-    puts cmd
+    cmd = %x[zfs set shareiscsi=on #{volume_path}]
   end
 
 end
