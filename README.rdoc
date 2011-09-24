@@ -38,6 +38,60 @@ should get you started.
 assume the host they are running on is somewhat disposable. Your needs
 may differ...
 
+== Synopsis
+
+General help can be obtained by running +store --help+, or +store+ with no
+arguments
+
+  A command-line tool for managing iSCSI targets on OpenSolaris.
+
+  Available commands:
+
+      help                 Show help for a command
+      new_vol              Create a new iSCSI volume in the SAN volume store.
+
+  Global options:
+
+      -h --help            show this help message and quit
+      -C --no-color        disable color
+      -V --verbose         make store command output more detailed
+      -v --version         show version information and quit
+      
+Help on individual commands can then be obtained using the command as an
+argument to +store help+. For instance
+
+  # store help new_vol
+  
+produces
+
+  store new_volume [--volume-store ZFS_PATH][--name GUID] [--size INTEGER]
+
+  aliases: new add add_vol
+
+  Create a new iSCSI volume in the SAN volume store.
+
+      By default, this command creates a 20G ZFS volume, and marks it for sharing
+      as an iSCSI target on the local network.
+
+      Warning: By default this commands sets up the iSCSI target with NO security.
+      This is fine for testing and use in the labs, but obviously is not ideal if
+      you care about the data stored on this new volume...
+
+  options:
+
+      -n --name       the name of the new volume. This must be a valid ZFS volume name, and
+                      defaults to an RFC 4122 GUID.
+
+      -s --size       the size of the new iSCSI volume. Note that while ZFS allows you to change
+                      the size of the new volume relatively easily, because the iSCSI initiator
+                      sees this volume as a raw device changing the size later may be very easy or
+                      very difficult depending on the initiators operating system (and the specific
+                      file system being used). In other words, choose with care: by default this
+                      command uses a size of 20G, which should be enough for most tasks in the
+                      labs.
+
+      -v --volume_store specifify the ZFS root of the new iSCSI volume. Defaults to "store/volumes".
+
 == Contributing to the SHU SAN Scripts
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
