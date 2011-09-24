@@ -15,6 +15,12 @@
 # Volume names are based on RFC 4122 UUIDs
 require "uuidtools"
 
+# Use the ANSI library to report the status to the user
+require "ansi/code"
+
+# Use the Socket API to get the first IPv4 address
+require "socket"
+
 # Use the ZFS library
 require "SANStore/zfs/zfs"
 
@@ -111,7 +117,14 @@ module SANStore::CLI::Commands
       target_name = COMStar.new_target(options[:volume_store] + "/" + options[:name])
 
       # Tell the caller what the new volume name is
-      puts target_name
+      text = "\n"
+      text << "A new iSCSI target has been created with the following properties\n"
+      text << "\n" 
+      text << sprintf("    %-25s %s\n", ANSI.red{ "Name:" }, target_name.wrap_and_indent(78, 20).lstrip)
+      text << sprintf("    %-25s %s\n", ANSI.red{ "IPv4 Address:" }, Socket::getaddrinfo(Socket.gethostname,"echo",Socket::AF_INET)[0][3])
+      text << "\n" 
+
+      puts text
     end
 
   end

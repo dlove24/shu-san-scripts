@@ -24,6 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ansi (>= 1.2)
   bundler (~> 1.0.0)
   cri (~> 2.0.2)
   facets (>= 2.4)

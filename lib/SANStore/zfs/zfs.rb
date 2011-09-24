@@ -28,8 +28,7 @@ class ZFS
   def self.new_volume(volume_path, volume_size)
     
     # Create the volume
-    SANStore::CLI::Logger.log_level(:low, :create, "Creating the a 
-      #{volume_size} ZFS volume at #{volume_path}")
+    SANStore::CLI::Logger.instance.log_level(:low, :create, "#{volume_size} ZFS volume at #{volume_path}")
     cmd = %x[zfs create -s -V #{volume_size} #{volume_path}]
 
   end
