@@ -28,6 +28,9 @@ module SANStore::CLI
       :error          => "\e[1m" + "\e[31m", # bold + red
       :warning        => "\e[1m" + "\e[33m", # bold + yellow
       :info           => "\e[1m" + "\e[32m", # bold + green
+      :create         => "\e[1m" + "\e[31m", # bold + red
+      :update         => "\e[1m" + "\e[33m", # bold + yellow
+      :identical      => "\e[1m" + "\e[32m", # bold + green
     }
 
     include Singleton

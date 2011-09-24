@@ -1,4 +1,4 @@
-# Copyright (c) 2011 David Love
+# Copyright (c) 2009 Denis Defreyne, 2010-2011 David Love
 #
 # Permission to use, copy, modify, and/or distribute this software for 
 # any purpose with or without fee is hereby granted, provided that the 
@@ -11,77 +11,73 @@
 # WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN 
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-#
-#
-# @author David Love
-#
 
-module WhiteCloth::CLI::Commands
+# Volume names are based on RFC 4122 UUIDs
+require "uuidtools"
+
+# Use the ZFS library
+require "SANStore/zfs/zfs"
+
+# Use the COMStar iSCSI library
+require "SANStore/iSCSI/comstar.rb"
+
+module SANStore::CLI::Commands
 
   # @author David Love
   #
-  # Displays a summary of the realm data found in the configured WhiteCloth
-  # server.
-  class Show < Cri::Command
-    
+  # The +list_vols+ command show the current iSCSI targets available
+  # on this host 
+  class ListVol < Cri::Command
+
     # The name of the sub-command (as it appears in the command line app)
     def name
-      'show-status'
+      'list_vols'
     end
 
     # The aliases this sub-command is known by
     def aliases
-      []
+      [
+        "list_vol", "list", "ls"
+      ]
     end
 
     # A short help text describing the purpose of this command
     def short_desc
-      'Create or update information from the network'
+      'Show the currently defined iSCSI targets on this host.'
     end
 
     # A longer description, detailing both the purpose and the
     # use of this command
     def long_desc
-      "Displays the current state of the evironemnt " +
-      "to update the host files (held in the 'hosts' directory). Existing " +
-      "information will be updated, and missing information inserted.\n"
-    end
-    
-    # Show the user the basic syntax of this command
-    def usage
-      "bootstrap show-status"
+      'Displays a list of valid iSCSI targets, all of which ' +
+      'should be available on the local network' + "\n\n"
+      'NOTE: Because of the way iSCSI works, this host has no ' +
+      'way of knowing what is actually '+ ANSI.bold{ "in" } + ' the volume. So even ' +
+      'if a target is defined, this host has no way of knowing if ' +
+      'a given initiator can actually ' + ANSI.bold{ "use" } +
+      'the contents of this volume. If something appears to be '
+      'wrong, check the set-up of the host to make sure it can '
+      'actually connect to the targets defined here.' 
     end
 
+    # Show the user the basic syntax of this command
+    def usage
+      "store list_vols"
+    end
+    
     # Define the options for this command
     def option_definitions
-      []
+      [
+      ]
     end
 
     # Execute the command
     def run(options, arguments)
 
-      # Load the list of groups
-      group_list = YAML::load( File.open("config/groups.yaml"))
-      
-      # Load the list of networks
-      network_list = YAML::load( File.open("config/networks.yaml"))
-
-      # Update the information in each group-network directory
-      gn_name_list = Array.new
-
-      network_list.each{|network|
-        puts network[1]
-        
-        net_block = network[1]['ip4-address-block'].to_s
-
-        # Scan this network
-        # parser = Nmap::Parser.parsescan("nmap", "-sVC " + net_block)
-
-        puts parser
-      }
-
+      # Get the list of defined volumes
+      volumes = COMStar.list_vols
     end
-  
+
   end
 
 end
