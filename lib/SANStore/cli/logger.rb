@@ -60,7 +60,7 @@ module SANStore::CLI
         level,
         '%s%12s%s:  %s' % [
           color? ? ACTION_COLORS[action.to_sym] : '',
-          action.capitalize,
+          action.to_s.capitalize,
           color? ? "\e[0m" : '',
           message.word_wrap(60).indent(15).lstrip
         ]
