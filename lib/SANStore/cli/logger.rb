@@ -25,12 +25,13 @@ module SANStore::CLI
     # ANSI console codes (escape sequences) for highlighting particular
     # log outputs.
     ACTION_COLORS = {
+      :create         => "\e[1m" + "\e[32m", # bold + green
+      :delete         => "\e[1m" + "\e[31m", # bold + red
       :error          => "\e[1m" + "\e[31m", # bold + red
-      :warning        => "\e[1m" + "\e[33m", # bold + yellow
-      :info           => "\e[1m" + "\e[32m", # bold + green
-      :create         => "\e[1m" + "\e[31m", # bold + red
+      :identical      => "\e[1m" + "\e[34m", # bold + blue
+      :info           => "\e[1m" + "\e[34m", # bold + blue
       :update         => "\e[1m" + "\e[33m", # bold + yellow
-      :identical      => "\e[1m" + "\e[32m", # bold + green
+      :warning        => "\e[1m" + "\e[33m", # bold + yellow
     }
 
     include Singleton
