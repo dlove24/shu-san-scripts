@@ -51,8 +51,9 @@ module SANStore::CLI
       add_command(self.help_command)
 
       # Add other commands
-      add_command(SANStore::CLI::Commands::NewVol.new)
+      add_command(SANStore::CLI::Commands::DeleteVol.new)
       add_command(SANStore::CLI::Commands::ListVols.new)
+      add_command(SANStore::CLI::Commands::NewVol.new)
     end
 
     # Returns the list of global option definitionss.

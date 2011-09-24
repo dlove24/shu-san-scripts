@@ -26,7 +26,7 @@ class COMStar
     
     # Create a new disk target for the ZFS volume
     SANStore::CLI::Logger.instance.log_level(:low, :create, "New SCSI block device at /dev/zvol/rdsk/#{volume_path}")
-    disk_target = %x[sbdadm create-lu /dev/zvol/rdsk/#{volume_path}]
+    disk_target = %x[sbdadm create-lu --lu-prop alias=#{volume_path} /dev/zvol/rdsk/#{volume_path}]
 
     # Get the GUID of the new disk target from the output of the
     # target creation command
@@ -40,6 +40,32 @@ class COMStar
     # Finally create the target...
     SANStore::CLI::Logger.instance.log_level(:low, :create, "iSCSI block target")
     target = %x[itadm create-target]
+
+    #... and return the name to the caller
+    target_name = target.split[1]
+  end
+  
+  # Delete an iSCSI target
+  def self.new_target(target_name)
+    
+    # Delete the target (and force any clients off the soon to die share)
+    SANStore::CLI::Logger.instance.log_level(:low, :warning, "Closing all sessions for #{target_name}")
+    target = %x[itadm delete-target -f #{target_name}]
+    
+    # Create a new disk target for the ZFS volume
+    SANStore::CLI::Logger.instance.log_level(:low, :create, "New SCSI block device at /dev/zvol/rdsk/#{volume_path}")
+    disk_target = %x[sbdadm create-lu /dev/zvol/rdsk/#{volume_path}]
+
+    # Get the GUID of the new disk target from the output of the
+    # target creation command
+    guid = disk_target.split(/$/)[4].split[0]
+    SANStore::CLI::Logger.instance.log_level(:low, :info, "Using #{guid} as the block device identifier")
+    
+    # Link the new disk target to the iSCSI framework
+    SANStore::CLI::Logger.instance.log_level(:low, :update, "Attaching #{guid} into the iSCSI framework")
+    vol_frame = %x[stmfadm add-view #{guid}]
+
+    
 
     #... and return the name to the caller
     target_name = target.split[1]
