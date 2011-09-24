@@ -26,5 +26,5 @@ end
 
 require 'SANStore/cli/commands/help'
 
-#require 'SANStore/cli/commands/new_vol'
+require 'SANStore/cli/commands/new_vol'
 #require 'SANStore/cli/commands/list_vols'
