@@ -17,13 +17,25 @@ Changes:
     * Version bump to 0.0.2. Added infrastructure needed for minimally working version
 
 
-HEAD / 2011-09-24
+HEAD / 2011-09-25
 
 Current Development (David Love)
 
 Changes:
 
-* 1 General Enhancements
+* 3 General Enhancements
 
+    * Version bump to 0.0.3
     * Regenerate gemspec for version 0.0.2
+    * Regenerate gemspec for version 0.0.2
+
+* 1 Bug Fixes
+
+    * Format options as well as the text description
+
+* 3 Patch Enhancements
+
+    * Add ability to generate the correct ZFS commands. Don't actually act on them yet
+    * Added support for sequential UUID's
+    * Require the Facets library in the main gem as well
 
