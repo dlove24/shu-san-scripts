@@ -86,7 +86,7 @@ module Cri
         text << "options:\n"
         text << "\n"
         option_definitions.sort { |x,y| x[:long] <=> y[:long] }.each do |opt_def|
-          text << sprintf("    -%1s --%-10s %s\n", opt_def[:short], opt_def[:long], opt_def[:desc])
+          text << sprintf("    -%1s --%-10s %s\n\n", opt_def[:short], opt_def[:long], opt_def[:desc].wrap_and_indent(78, 20).lstrip)
         end
       end
 
