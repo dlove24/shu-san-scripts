@@ -1,5 +1,47 @@
 RELEASE HISTORY
 
+v0.1.0 / 2011-09-24
+
+Regenerate gemspec for version 0.1.0 (Super-User root@frege.(none))
+
+Changes:
+
+* 2 General Enhancements
+
+    * Version bump to 0.1.0
+    * Regenerate gemspec for version 0.0.4
+
+* 1 Patch Enhancements
+
+    * Added library for handling iSCSI targets
+
+
+v0.0.4 / 2011-09-24
+
+Regenerate gemspec for version 0.0.4 (David Love david@homeunix.org.uk)
+
+Changes:
+
+* 4 General Enhancements
+
+    * Version bump to 0.0.4
+    * Version bump to 0.0.3
+    * Regenerate gemspec for version 0.0.2
+    * Regenerate gemspec for version 0.0.2
+
+* 2 Bug Fixes
+
+    * Changed the volume store option name so that it correctly sets the volume path when set
+    * Format options as well as the text description
+
+* 4 Patch Enhancements
+
+    * Start executing ZFS commands
+    * Add ability to generate the correct ZFS commands. Don't actually act on them yet
+    * Added support for sequential UUID's
+    * Require the Facets library in the main gem as well
+
+
 v0.0.2 / 2011-09-23
 
 Regenerate gemspec for version 0.0.2 (David Love david@homeunix.org.uk)
@@ -23,19 +65,8 @@ Current Development (David Love)
 
 Changes:
 
-* 3 General Enhancements
+* 2 General Enhancements
 
-    * Version bump to 0.0.3
-    * Regenerate gemspec for version 0.0.2
-    * Regenerate gemspec for version 0.0.2
-
-* 1 Bug Fixes
-
-    * Format options as well as the text description
-
-* 3 Patch Enhancements
-
-    * Add ability to generate the correct ZFS commands. Don't actually act on them yet
-    * Added support for sequential UUID's
-    * Require the Facets library in the main gem as well
+    * Regenerate gemspec for version 0.1.0
+    * Regenerate gemspec for version 0.1.0
 
