@@ -16,6 +16,9 @@ gem "cri", "~> 2.0.2"
 # Library extensions
 gem "facets", ">= 2.4"
 
+# GUID library
+gem "uuidtools", "~> 2.1.2"
+
 ###
 ### Development Gems. All _additional_ gems required by development (as opposed to
 ###                   production environments). If it is required at run-time, it
