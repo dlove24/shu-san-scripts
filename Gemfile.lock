@@ -25,6 +25,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.0.0)
   cri (~> 2.0.2)
+  facets (>= 2.4)
   jeweler (~> 1.6.0)
   minitest
   riot
