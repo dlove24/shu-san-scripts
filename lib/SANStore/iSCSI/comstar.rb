@@ -50,11 +50,11 @@ class COMStar
     raw_list = %x[itadm list-target]
     
     # Create a hash for the final list of targets
-    target_list = Hash.new
+    target_list = Array.new
     
     # Run through the raw list of targets
     target_array = raw_list.split(/$/)
-    target_array.delete!(0)
+    target_array.delete_at(0)
     
     target_array.each{|row|
       row_fragments = row.split
@@ -63,7 +63,7 @@ class COMStar
       row_hash[:name] = row_fragments[0]
       row_hash[:state] = row_fragments[1]
       row_hash[:sessions] = row_fragments[2]
-      
+     
       target_list << row_hash
     }
     

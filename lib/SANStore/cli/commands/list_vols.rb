@@ -27,7 +27,7 @@ module SANStore::CLI::Commands
   #
   # The +list_vols+ command show the current iSCSI targets available
   # on this host 
-  class ListVol < Cri::Command
+  class ListVols < Cri::Command
 
     # The name of the sub-command (as it appears in the command line app)
     def name
@@ -80,20 +80,22 @@ module SANStore::CLI::Commands
       # Show the list to the caller
       text = String.new
       volumes.each{|target|
-        text << << sprintf("%-40s ", target[:name])
+        text << sprintf("%-60s ", target[:name])
         
         if target[:state] == "online" then
-          text << << sprintf("%-10s\n", ANSI.green{ target[:state] })
+          text << sprintf("%-20s ", ANSI.green{ target[:state] })
         else
-          text << << sprintf("%-10s\n", ANSI.black{ target[:state] })
+          text << sprintf("%-20s ", ANSI.black{ target[:state] })
         end
         
         if target[:sessions].to_i > 0 then
-          text << << sprintf("%-10s\n", ANSI.white{ target[:sessions] })
+          text << sprintf("%-10s\n", ANSI.white{ target[:sessions] })
         else
-          text << << sprintf("%-10s\n", ANSI.black{ target[:sessions] })
+          text << sprintf("%-10s\n", ANSI.black{ target[:sessions] })
         end
       }
+      puts sprintf("%-68s %-19s %-10s\n", ANSI.bold{ "Target Name"}, ANSI.bold{ "Status" }, ANSI.bold{ "Open Sessions" })
+      puts text
     end
 
   end
