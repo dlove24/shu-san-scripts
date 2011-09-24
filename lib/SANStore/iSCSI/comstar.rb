@@ -44,6 +44,32 @@ class COMStar
     #... and return the name to the caller
     target_name = target.split[1]
   end
+  
+  # List the current iSCSI targets defined on this host
+  def self.list_vols
+    raw_list = %x[itadm list-target]
+    
+    # Create a hash for the final list of targets
+    target_list = Hash.new
+    
+    # Run through the raw list of targets
+    target_array = raw_list.split(/$/)
+    target_array.delete!(0)
+    
+    target_array.each{|row|
+      row_fragments = row.split
+      row_hash = Hash.new
+      
+      row_hash[:name] = row_fragments[0]
+      row_hash[:state] = row_fragments[1]
+      row_hash[:sessions] = row_fragments[2]
+      
+      target_list << row_hash
+    }
+    
+    # return the list to the caller
+    return target_list
+  end
 
 end
   

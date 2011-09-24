@@ -76,6 +76,24 @@ module SANStore::CLI::Commands
 
       # Get the list of defined volumes
       volumes = COMStar.list_vols
+      
+      # Show the list to the caller
+      text = String.new
+      volumes.each{|target|
+        text << << sprintf("%-40s ", target[:name])
+        
+        if target[:state] == "online" then
+          text << << sprintf("%-10s\n", ANSI.green{ target[:state] })
+        else
+          text << << sprintf("%-10s\n", ANSI.black{ target[:state] })
+        end
+        
+        if target[:sessions].to_i > 0 then
+          text << << sprintf("%-10s\n", ANSI.white{ target[:sessions] })
+        else
+          text << << sprintf("%-10s\n", ANSI.black{ target[:sessions] })
+        end
+      }
     end
 
   end
