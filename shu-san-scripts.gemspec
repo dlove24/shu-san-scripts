@@ -4,23 +4,56 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "shu-san-scripts"
+  s.name = %q{shu-san-scripts}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["David Love"]
-  s.date = "2011-09-24"
-  s.description = "See the README file."
-  s.email = "david@homeunix.org.uk"
+  s.authors = [%q{David Love}]
+  s.date = %q{2011-09-24}
+  s.description = %q{See the README file.}
+  s.email = %q{david@homeunix.org.uk}
+  s.executables = [%q{store}]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
   ]
-  s.homepage = "http://github.com/dlove24/shu-san-scripts"
-  s.licenses = ["ISC"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
-  s.summary = "Scripts used to set-up and manage iSCSI targets on OpenSolaris (ZFS) systems."
+  s.files = [
+    ".document",
+    ".rvmrc",
+    "Gemfile",
+    "Gemfile.lock",
+    "HISTORY",
+    "LICENSE.txt",
+    "README.rdoc",
+    "Rakefile",
+    "VERSION",
+    "bin/store",
+    "lib/SANStore.rb",
+    "lib/SANStore/cli.rb",
+    "lib/SANStore/cli/base.rb",
+    "lib/SANStore/cli/commands.rb",
+    "lib/SANStore/cli/commands/help.rb",
+    "lib/SANStore/cli/commands/list_vols.rb",
+    "lib/SANStore/cli/commands/new_vol.rb",
+    "lib/SANStore/cli/logger.rb",
+    "lib/SANStore/cri.rb",
+    "lib/SANStore/cri/base.rb",
+    "lib/SANStore/cri/command.rb",
+    "lib/SANStore/cri/core_ext.rb",
+    "lib/SANStore/cri/core_ext/string.rb",
+    "lib/SANStore/cri/option_parser.rb",
+    "lib/SANStore/helpers/uuid.rb",
+    "lib/SANStore/iSCSI/comstar.rb",
+    "lib/SANStore/zfs/zfs.rb",
+    "shu-san-scripts.gemspec",
+    "test/helper.rb",
+    "test/test_shu-san-scripts.rb"
+  ]
+  s.homepage = %q{http://github.com/dlove24/shu-san-scripts}
+  s.licenses = [%q{ISC}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.6}
+  s.summary = %q{Scripts used to set-up and manage iSCSI targets on OpenSolaris (ZFS) systems.}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
