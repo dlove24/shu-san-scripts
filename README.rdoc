@@ -1,9 +1,9 @@
 = SHU SAN Scripts
 
-Together these scripts define a +store+ command, used to simplify the
-task of creating iSCSI targets on OpenSolaris (Solaris > 11) based
-hosts. It has been tested on Nexenta NCP and Open Indiana, but with some
-modification it could be made to work on FreeBSD as well. 
+Together these scripts define a +store+ command, used to simplify the task of
+creating, deleting and managing iSCSI targets on OpenSolaris (Solaris > 11) 
+based hosts. It has been tested on Nexenta NCP and Open Indiana, but with 
+some modification it could be made to work on FreeBSD as well.
 
 The user interface is deliberately as simple as possible: we assume the
 user has no underlying knowledge of (Open)Solaris, ZFS and not all that
@@ -47,7 +47,9 @@ arguments
 
   Available commands:
 
+      delete_vol           Remove the specified target from the iSCSI volume store.
       help                 Show help for a command
+      list_vols            Show the currently defined iSCSI targets on this host.
       new_vol              Create a new iSCSI volume in the SAN volume store.
 
   Global options:
