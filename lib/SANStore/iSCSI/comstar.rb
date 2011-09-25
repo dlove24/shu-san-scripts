@@ -50,7 +50,7 @@ class COMStar
     
     # Store the volume GUID as the alias so we can find it later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the iSCSI target alias")
-    %x[itadm modify-target --alias #{guid} #{target_name}]
+    %x[itadm modify-target --alias #{id} #{target_name}]
     
     # Return the target name to the caller
     return target_name
