@@ -109,6 +109,8 @@ module SANStore::CLI::Commands
         size = "20G" 
         options[:size] = size
       end
+      
+      SANStore::CLI::Logger.instance.log_level(:low, :info, "Using #{options[:name]} as the volume identifier")
 
       # Ask for a new volume
       ZFS.new_volume(options[:volume_store] + "/" + options[:name], options[:size]) 
