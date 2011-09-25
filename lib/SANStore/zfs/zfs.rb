@@ -32,6 +32,23 @@ class ZFS
     cmd = %x[zfs create -s -V #{volume_size} #{volume_path}]
 
   end
+  
+  # Delete (destroy) a volume from the ZFS pool. This command can handle
+  # both raw paths, and absolute paths.
+  def self.delete_volume(volume_path)
+    
+    # Work out if this is a raw volume path, or an absolute path
+    if volume_path.index(/\/dev\/zvol\/rdsk/) then
+      # This is a relative path, so we need to split the
+      # device prefix off to get the volume path
+      volume_path = volume_path.partition(/\/dev\/zvol\/rdsk/)[2]
+    end
+    
+    # Delete the volume from the system
+    SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing ZFS volume #{volume_path} from the filestore")
+    cmd = %x[zfs destroy -r -f #{volume_path}]
+    
+  end
 
 end
   

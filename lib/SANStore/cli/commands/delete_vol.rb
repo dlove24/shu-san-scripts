@@ -101,10 +101,11 @@ module SANStore::CLI::Commands
 
       # Delete the iSCSI target
       SANStore::CLI::Logger.instance.log_level(:high, :delete, "Removing target #{arguments[0]}")
-      COMStar.delete_target(arguments[0])
+      zfs_volume = COMStar.delete_target(arguments[0])
       
       # Remove the underlying ZFS store
-      # ZFS.delete_volume(options[:volume_store] + "/" + options[:name], options[:size])    
+      SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing ZFS store for #{arguments[0]}")
+      ZFS.delete_volume(zfs_volume)    
     end
 
   end
