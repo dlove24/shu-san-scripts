@@ -45,7 +45,7 @@ class ZFS
     end
     
     # Delete the volume from the system
-    SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing ZFS volume #{volume_path} from the filestore")
+    SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing ZFS volume #{volume_path} from the file-store")
     cmd = %x[zfs destroy -r -f #{volume_path}]
     
   end

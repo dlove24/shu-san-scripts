@@ -22,26 +22,26 @@ class COMStar
   
   # Create a new, ready to use, iSCSI target. Functionally this is command
   # is equivalent to the old "shareiscsi=on" ZFS volume property.
-  def self.new_target(volume_path)
+  def self.new_target(volume_path, volume_guid)
     
     # Create a new disk target for the ZFS volume
     SANStore::CLI::Logger.instance.log_level(:low, :create, "New SCSI block device at /dev/zvol/rdsk/#{volume_path}")
     disk_target = %x[sbdadm create-lu /dev/zvol/rdsk/#{volume_path}]
 
-    # Get the GUID of the new disk target from the output of the
+    # Get the ID of the new disk target from the output of the
     # target creation command
-    guid = disk_target.split(/$/)[4].split[0]
-    SANStore::CLI::Logger.instance.log_level(:low, :info, "Using #{guid} as the logical unit identifier")
+    id = disk_target.split(/$/)[4].split[0]
+    SANStore::CLI::Logger.instance.log_level(:low, :info, "Using #{id} as the logical unit identifier")
    
     # Modify the just created logical unit to include the path of the
     # volume backing it. This makes it much easier to get rid of the
     # relevant volume later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the logical unit alias")
-    modify_lu = %x[stmfadm modify-lu --lu-prop alias=#{File.basename(volume_path)} #{guid}]
+    modify_lu = %x[stmfadm modify-lu --lu-prop alias=#{File.basename(volume_path)} #{volume_guid}]
 
     # Link the new disk target to the iSCSI framework
-    SANStore::CLI::Logger.instance.log_level(:low, :update, "Attaching logical unit #{guid} into the iSCSI framework")
-    vol_frame = %x[stmfadm add-view #{guid}]
+    SANStore::CLI::Logger.instance.log_level(:low, :update, "Attaching logical unit #{id} into the iSCSI framework")
+    vol_frame = %x[stmfadm add-view #{id}]
 
     # Create the target...
     SANStore::CLI::Logger.instance.log_level(:low, :create, "iSCSI block target")

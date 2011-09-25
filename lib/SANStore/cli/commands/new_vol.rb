@@ -114,7 +114,7 @@ module SANStore::CLI::Commands
       ZFS.new_volume(options[:volume_store] + "/" + options[:name], options[:size]) 
 
       # Set the volume up as an iSCSI target
-      target_name = COMStar.new_target(options[:volume_store] + "/" + options[:name])
+      target_name = COMStar.new_target(options[:volume_store] + "/" + options[:name], options[:name])
 
       # Tell the caller what the new volume name is
       text = "\n"
