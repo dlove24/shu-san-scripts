@@ -43,6 +43,11 @@ class ZFS
       # device prefix off to get the volume path
       volume_path = volume_path.partition(/\/dev\/zvol\/rdsk/)[2]
     end
+
+    # Remove any slash prefixes
+    if volume_path[0] == 0x2F then
+      volume_path = volume_path[1..volume_path.length]
+    end 
     
     # Delete the volume from the system
     SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing ZFS volume #{volume_path} from the file-store")

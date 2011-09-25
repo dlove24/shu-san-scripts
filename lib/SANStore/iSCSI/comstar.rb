@@ -37,7 +37,7 @@ class COMStar
     # volume backing it. This makes it much easier to get rid of the
     # relevant volume later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the logical unit alias")
-    modify_lu = %x[stmfadm modify-lu --lu-prop alias=#{File.basename(volume_path)} #{volume_guid}]
+    modify_lu = %x[stmfadm modify-lu --lu-prop alias=#{volume_guid} #{id}]
 
     # Link the new disk target to the iSCSI framework
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Attaching logical unit #{id} into the iSCSI framework")
@@ -50,7 +50,7 @@ class COMStar
     
     # Store the volume GUID as the alias so we can find it later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the iSCSI target alias")
-    %x[itadm modify-target --alias #{id} #{target_name}]
+    %x[itadm modify-target --alias #{volume_guid} #{target_name}]
     
     # Return the target name to the caller
     return target_name
@@ -64,14 +64,11 @@ class COMStar
     target_map = self.TargetToGUIDMap
     target_guid = target_map[target_name]
     
-    # Delete the target (and force any clients off the soon to die share)
-    SANStore::CLI::Logger.instance.log_level(:low, :warning, "Closing all sessions for #{target_name}")
-    target = %x[itadm delete-target -f #{target_name}]
-    
     # Get the maps of the LU identifers to the underlying stores
     vol_map = self.LUToVolMap
     
-    # Look for the store with the GUID of the target we have just deleted
+    # Look for the store with the GUID of the target we want to delete
+    SANStore::CLI::Logger.instance.log_level(:low, :info, "Looking for the name of the volume #{target_guid} backing #{target_name}")
     vol_name = ""
     vol_store = ""
     vol_map.each{|key, value|
@@ -90,9 +87,13 @@ class COMStar
       return ""
     end
     
+    # Delete the target (and force any clients off the soon to die share)
+    SANStore::CLI::Logger.instance.log_level(:low, :warning, "Closing all sessions for #{target_name}")
+    target = %x[itadm delete-target -f #{target_name}]
+    
     # Now unlink the SCSI logical unit, so that we can free the underlying ZFS volume
     SANStore::CLI::Logger.instance.log_level(:low, :delete, "Removing logical units associated with the deleted target")
-    disk_target = %x[sbdadm delete-lu vol_name]
+    disk_target = %x[sbdadm delete-lu #{vol_name}]
     
     # The file store is now ready for deletion. We will tell the caller what to remove, but we
     # don't actually do this ourselves (file systems are someone elses problem)
@@ -140,7 +141,7 @@ class COMStar
     map_entry = nil
     raw_index = 0
     
-    while index < raw_map.length do
+    while raw_index < raw_map.length do
       # Is this line the start of a new target entry
       if raw_map[raw_index].index(/Target\:/) then
         
@@ -151,8 +152,7 @@ class COMStar
         
         # Create a new map entry
         map_entry = String.new        
-        map_index = raw_map[raw_index].partition(/Target\:/)[2]
-        puts map_index
+        map_index = raw_map[raw_index].partition(/Target\:/)[2].strip
         
       else
         
@@ -161,14 +161,20 @@ class COMStar
         
         case entry[0].strip
           when "Alias"
-            map_entry = entry[2]
+            map_entry = entry[2].strip
         end
         
       end
+
+      raw_index += 1
+    end
+
+    # Add the last entry
+    unless map_entry.nil? then
+      map_hash[map_index] = map_entry
     end
     
     # Return the hash map
-    puts map_hash
     return map_hash
   
   end
@@ -189,7 +195,7 @@ class COMStar
     map_entry = nil
     raw_index = 0
     
-    while index < raw_map.length do
+    while raw_index < raw_map.length do
       # Is this line the start of a new LU entry
       if raw_map[raw_index].index(/LU Name\:/) then
         
@@ -200,8 +206,7 @@ class COMStar
         
         # Create a new map entry
         map_entry = Hash.new        
-        map_index = raw_map[raw_index].partition(/LU Name\:/)[2]
-        puts map_index
+        map_index = raw_map[raw_index].partition(/LU Name\:/)[2].strip
         
       else
         
@@ -210,16 +215,22 @@ class COMStar
         
         case entry[0].strip
           when "Alias"
-            map_entry[:guid] = entry[2]
+            map_entry[:guid] = entry[2].strip
           when "Data File"
-            map_entry[:data_file] = entry[2]
+            map_entry[:data_file] = entry[2].strip
         end
         
       end
+
+      raw_index += 1
+    end
+    
+    # Add the last entry
+    unless map_entry.nil? then
+      map_hash[map_index] = map_entry
     end
     
     # Return the hash map
-    puts map_hash
     return map_hash
   
   end
