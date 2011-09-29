@@ -21,6 +21,8 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{See the README file.}
   gem.email = "david@homeunix.org.uk"
   gem.authors = ["David Love"]
+  gem.files = Dir.glob('bin/*.rb')
+  gem.files = Dir.glob('lib/**/*.rb')
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -41,5 +43,5 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "shu-san-scripts #{version}"
   rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  # rdoc.rdoc_files.include('lib/**/*.rb')
 end
