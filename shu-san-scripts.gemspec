@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "shu-san-scripts"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Love"]
@@ -15,26 +15,6 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
-  ]
-  s.files = [
-    "lib/SANStore.rb",
-    "lib/SANStore/cli.rb",
-    "lib/SANStore/cli/base.rb",
-    "lib/SANStore/cli/commands.rb",
-    "lib/SANStore/cli/commands/delete_vol.rb",
-    "lib/SANStore/cli/commands/help.rb",
-    "lib/SANStore/cli/commands/list_vols.rb",
-    "lib/SANStore/cli/commands/new_vol.rb",
-    "lib/SANStore/cli/logger.rb",
-    "lib/SANStore/cri.rb",
-    "lib/SANStore/cri/base.rb",
-    "lib/SANStore/cri/command.rb",
-    "lib/SANStore/cri/core_ext.rb",
-    "lib/SANStore/cri/core_ext/string.rb",
-    "lib/SANStore/cri/option_parser.rb",
-    "lib/SANStore/helpers/uuid.rb",
-    "lib/SANStore/iSCSI/comstar.rb",
-    "lib/SANStore/zfs/zfs.rb"
   ]
   s.homepage = "http://github.com/dlove24/shu-san-scripts"
   s.licenses = ["ISC"]
