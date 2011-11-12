@@ -38,10 +38,14 @@ class COMStar
     # relevant volume later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the logical unit alias")
     modify_lu = %x[stmfadm modify-lu --lu-prop alias=#{volume_guid} #{id}]
+    
+    # Create a new target group
+    SANStore::CLI::Logger.instance.log_level(:low, :create, "Creating target group #{id}")
+    %x[stmfadm create-tg #{id}]
 
     # Link the new disk target to the iSCSI framework
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Attaching logical unit #{id} into the iSCSI framework")
-    vol_frame = %x[stmfadm add-view #{id}]
+    vol_frame = %x[stmfadm add-view --target-group #{id} #{id}]
 
     # Create the target...
     SANStore::CLI::Logger.instance.log_level(:low, :create, "iSCSI block target")
@@ -51,6 +55,10 @@ class COMStar
     # Store the volume GUID as the alias so we can find it later
     SANStore::CLI::Logger.instance.log_level(:low, :update, "Storing the volume GUID as the iSCSI target alias")
     %x[itadm modify-target --alias #{volume_guid} #{target_name}]
+
+    # Add the new target to the correct target group
+    SANStore::CLI::Logger.instance.log_level(:low, :update, "Adding the target #{target_name} to its target group")
+    %x[svcadm disable stmf; sleep 2; stmfadm add-tg-member -g #{id} #{target_name}; svcadm enable stmf]
     
     # Return the target name to the caller
     return target_name
